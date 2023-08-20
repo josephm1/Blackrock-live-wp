@@ -361,10 +361,11 @@ function estimateTideStatus(referenceTime) {
 }
 
 function setTide() {
-  const tideData = localStorage.getItem("tideData").data;
+  const tideData = localStorage.getItem("tideData");
   if (
-    tideData != undefined &&
-    864000000 > new Date(tideData[35].time).getTime() - new Date().getTime()
+    tideData.data != undefined &&
+    864000000 >
+      new Date(tideData.data[35].time).getTime() - new Date().getTime()
   ) {
     let referenceTime = new Date().getTime();
     const { estimatedHeight, tideDirection } =
