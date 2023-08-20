@@ -361,7 +361,7 @@ function estimateTideStatus(referenceTime) {
 }
 
 function setTide() {
-  const tideData = localStorage.getItem("tideData");
+  const tideData = JSON.parse(localStorage.getItem("tideData"));
   if (
     tideData.data != undefined &&
     864000000 >
