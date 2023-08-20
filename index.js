@@ -102,7 +102,6 @@ async function getWeatherData() {
   const earliestHourlyData = data.hourly[0].dt;
 
   if (currentDate !== weatherReportDate) {
-    getTide();
     getWeather();
     return null;
   }
@@ -331,6 +330,13 @@ function findNearestTides(referenceTime, tideData) {
 // Calculate the estimated tide height and direction
 function estimateTideStatus(referenceTime) {
   let tideData = JSON.parse(localStorage.getItem("tideData")).data;
+
+  if (tideData == undefined) {
+    const estimatedHeight = 0;
+    const tideDirection = "rising";
+    return { estimatedHeight, tideDirection };
+  }
+
   const { prevTide, nextTide } = findNearestTides(referenceTime, tideData);
 
   const prevTime = new Date(prevTide.time).getTime();
@@ -355,7 +361,11 @@ function estimateTideStatus(referenceTime) {
 }
 
 function setTide() {
-  if (localStorage.getItem("tideData") != null) {
+  const tideData = localStorage.getItem("tideData").data;
+  if (
+    tideData != undefined &&
+    864000000 > new Date(tideData[35].time).getTime() - new Date().getTime()
+  ) {
     let referenceTime = new Date().getTime();
     const { estimatedHeight, tideDirection } =
       estimateTideStatus(referenceTime);
