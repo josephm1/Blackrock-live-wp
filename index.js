@@ -363,6 +363,7 @@ function estimateTideStatus(referenceTime) {
 function setTide() {
   const tideData = JSON.parse(localStorage.getItem("tideData"));
   if (
+    tideData != null &&
     tideData.data != undefined &&
     864000000 >
       new Date(tideData.data[35].time).getTime() - new Date().getTime()
