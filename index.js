@@ -339,6 +339,12 @@ function estimateTideStatus(referenceTime) {
 
   const { prevTide, nextTide } = findNearestTides(referenceTime, tideData);
 
+  if (prevTide == undefined || nextTide == undefined) {
+    const estimatedHeight = 0;
+    const tideDirection = "rising";
+    return { estimatedHeight, tideDirection };
+  }
+
   const prevTime = new Date(prevTide.time).getTime();
   const nextTime = new Date(nextTide.time).getTime();
   const timeDiff = nextTime - prevTime;
